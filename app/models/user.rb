@@ -18,6 +18,11 @@ class User < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
+  def avatar_url
+    hash_value = Digest::MD5.hexdigest(email.downcase)
+    "http://www.gravatar.com/avatar/#{hash_value}?s=160"
+  end
+
   def to_param
     username
   end
