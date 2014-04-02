@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :select_user, only: [:show, :edit, :update, :destroy]
+
   def new
     @user = User.new
   end
@@ -7,14 +9,13 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       flash[:notice] = "Aramıza hoş geldin!"
-      redirect_to @user
+      redirect_to profile_path(@user)
     else
       render :new
     end
   end
 
   def show
-    @user = User.find(params[:id])
     @data = []
     if params[:sayfa]
       render layout: 'profile', locals: {page: params[:sayfa]}
@@ -24,13 +25,10 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
     render layout: 'profile'
   end
 
   def update
-    @user = User.find(params[:id])
-
     update_params = user_params
     if update_params.has_key?(:password)
       update_params.delete([:password, :password_confirmation])
@@ -38,19 +36,21 @@ class UsersController < ApplicationController
 
     if @user.update(update_params)
       flash[:notice] = "Profil bilgileriniz güncellendi."
-      redirect_to @user
+      redirect_to profile_path(@user)
     else
       render :edit, layout: 'profile'
     end
   end
 
   def destroy
-    @user = User.find(params[:id])
     @user.destroy
     redirect_to '/'
   end
 
   private
+  def select_user
+    @user = User.find_by_username(params[:id])
+  end
 
   def user_params
     params.require(:user).permit!
