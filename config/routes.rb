@@ -1,10 +1,15 @@
 RailsOnForum::Application.routes.draw do
+
+  resource :session, only: [:new, :create, :destroy]
+  get '/oturum_ac', to: 'sessions#new', as: :login
+  delete '/oturumu_kapat', to: 'sessions#destroy', as: :logout
+
+  get '/kaydol', to: 'users#new', as: :register
   get '/users/new', to: redirect('/kaydol')
   get '/:id', to: 'users#show', as: :profile
   get '/:id/edit', to: 'users#edit', as: :edit_profile
-
   resources :users, except: :index
-  get '/kaydol', to: 'users#new', as: :register
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
