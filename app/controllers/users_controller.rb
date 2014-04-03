@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   before_action :select_user, only: [:show, :edit, :update, :destroy]
-  before_action :allowed?, only: [:edit, :create, :destroy]
+  before_action only: [:edit, :create, :destroy] do
+    validate_permission! select_user
+  end
 
   def new
     @user = User.new
@@ -54,13 +56,5 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit!
-  end
-
-  def allowed?
-    user = select_user
-
-    unless current_user == user
-      redirect_to profile_path(user), alert: "Bunu yapmaya yetkiniz yok!"
-    end
   end
 end
