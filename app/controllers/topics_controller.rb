@@ -5,12 +5,6 @@ class TopicsController < ApplicationController
   end
   before_action :set_topic, only: [:show, :edit, :update, :destroy]
 
-  # GET /topics
-  # GET /topics.json
-  def index
-    @topics = Topic.all
-  end
-
   # GET /topics/1
   # GET /topics/1.json
   def show
