@@ -20,7 +20,19 @@ class CommentsController < ApplicationController
     else
       render :new
     end
+  end
 
+  def update
+    if @comment.update(comment_params)
+      redirect_to @comment.topic, notice: 'Yorumunuz başarıyla güncellendi.'
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @comment.destroy
+    redirect_to @comment.topic, notice: 'Yorumunuz başarıyla silindi.'
   end
 
   private
