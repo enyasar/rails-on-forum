@@ -33,12 +33,10 @@ class TopicsController < ApplicationController
     @topic = @forum.topics.new(topic_params)
     @topic.user = current_user
 
-    respond_to do |format|
-      if @topic.save
-        redirect_to @topic, notice: 'Konu başarıyla oluşturuldu.'
-      else
-        render :new
-      end
+    if @topic.save
+      redirect_to @topic, notice: 'Konu başarıyla oluşturuldu.'
+    else
+      render :new
     end
   end
 

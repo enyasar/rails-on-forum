@@ -7,6 +7,12 @@
                         class: 'small secondary new button right round' %>
         <% end %>
       </div>
-      <p>Bu foruma ait konular burada listelenecek.</p>
+      <div class="topics panel columns radius">
+        <% if @forum.topics.any? %>
+            <%= render @forum.topics %>
+        <% else %>
+            <p>Henüz hiç bir konu açılmamış.</p>
+        <% end %>
+      </div>
     </div>
 <% end %>
