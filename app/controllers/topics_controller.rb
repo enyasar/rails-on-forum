@@ -5,23 +5,17 @@ class TopicsController < ApplicationController
   end
   before_action :set_topic, only: [:show, :edit, :update, :destroy]
 
-  # GET /topics/1
-  # GET /topics/1.json
   def show
   end
 
-  # GET /topics/new
   def new
     @forum = Forum.find(params[:forum_id])
     @topic = @forum.topics.new
   end
 
-  # GET /topics/1/edit
   def edit
   end
 
-  # POST /topics
-  # POST /topics.json
   def create
     @forum = Forum.find(params[:forum_id])
     @topic = @forum.topics.new(topic_params)
@@ -35,7 +29,6 @@ class TopicsController < ApplicationController
   end
 
   # PATCH/PUT /topics/1
-  # PATCH/PUT /topics/1.json
   def update
     respond_to do |format|
       if @topic.update(topic_params)
@@ -47,7 +40,6 @@ class TopicsController < ApplicationController
   end
 
   # DELETE /topics/1
-  # DELETE /topics/1.json
   def destroy
     @topic.destroy
     redirect_to root_url, notice: 'Konu başarıyla silindi'
